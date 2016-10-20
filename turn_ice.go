@@ -10,8 +10,8 @@ import (
 
 type turnServer struct {
 	Username   string   `json:"username"`
-	Credential string   `json:"credential"`
-	Urls       []string `json:"urls"`
+	Credential string   `json:"password"`
+	Urls       []string `json:"uris"`
 }
 
 type stunServer struct {
