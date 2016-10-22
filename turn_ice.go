@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"html/template"
 	"log"
@@ -64,16 +65,19 @@ var turnserver turnServer
 var stunserver stunServer
 
 func main() {
-	fmt.Println("HEHEHEHHEHE")
-
-	turnserver.Urls = []string{"turn:115.29.55.106:3478?transport=udp", "turn:115.29.55.106:3478?transport=tcp", "turn:115.29.55.106:3479?transport=udp", "turn:115.29.55.106:3479?transport=tcp"}
-	stunserver.Urls = []string{"stun:stun.115.29.55.106"}
+	server := flag.String("server", "127.0.0.1", "the ip of server")
+	port := flag.String("port", "9000", "the port to listen")
+	flag.Parse()
+	IP := *server
+	fmt.Println("ip:" + IP + " port:" + *port)
+	turnserver.Urls = []string{"turn:" + IP + ":3478?transport=udp", "turn:" + IP + ":3478?transport=tcp", "turn:" + IP + ":3479?transport=udp", "turn:" + IP + ":3479?transport=tcp"}
+	stunserver.Urls = []string{"stun:stun." + IP}
 	iceserver.Servers = append(iceserver.Servers, &turnserver)
 	iceserver.Servers = append(iceserver.Servers, &stunserver)
-	turnserver.Username = "changvvb"
-	turnserver.Credential = "changvvb"
+	turnserver.Username = "testuser"
+	turnserver.Credential = "testpass"
 
 	http.HandleFunc("/ice", ice)
 	http.HandleFunc("/turn", turn)
-	http.ListenAndServe(":9000", nil)
+	http.ListenAndServe(":"+*port, nil)
 }
