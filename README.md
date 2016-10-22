@@ -7,4 +7,4 @@ $ go get github.com/changvvb/turn_ice
 $ go install github.com/changvvb/turn_ice
 $ turn_ice -server=IP
 ```
-<a href="https://www.github.com/changvvb/IM">BACK</a>
+<a href="https://github.com/changvvb/IM#3配置一个api服务基于golang">BACK</a>
